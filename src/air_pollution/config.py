@@ -96,8 +96,9 @@ class SplittingConfig(BaseModel):
         random_state (int): The seed used for random number generation.
     """
 
-    test_size: float = Field(..., ge=0.0, le=1.0, description="Proportion of test data.")
-    
+    test_size: float = Field(
+        ..., ge=0.0, le=1.0, description="Proportion of test data."
+    )
 
     @field_validator("test_size")
     def validate_test_size(cls, value: float) -> float:
