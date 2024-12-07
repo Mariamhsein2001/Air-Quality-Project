@@ -1,6 +1,8 @@
 from pathlib import Path
+
 import pandas as pd
 import pytest
+
 from air_pollution.data_loader import DataLoaderFactory
 
 
@@ -36,4 +38,3 @@ def test_csv_loader(sample_csv: str) -> None:
 
     assert isinstance(data, pd.DataFrame), "Data should be a pandas DataFrame."
     assert data.shape == (3, 3), "Data shape mismatch."
-

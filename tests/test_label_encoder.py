@@ -1,5 +1,6 @@
 import pandas as pd
 import pytest
+
 from air_pollution.data_pipeline.label_encoder import LabelEncodingTransformer
 
 
@@ -33,4 +34,6 @@ def test_label_encoding_single_class(sample_data: pd.DataFrame) -> None:
     transformed_data = label_encoder.fit_transform(single_class_data)
 
     # Validate that the target column contains only a single encoded class (0)
-    assert set(transformed_data["target"].unique()) == {0}, "Single class should be encoded as 0."
+    assert set(transformed_data["target"].unique()) == {
+        0
+    }, "Single class should be encoded as 0."

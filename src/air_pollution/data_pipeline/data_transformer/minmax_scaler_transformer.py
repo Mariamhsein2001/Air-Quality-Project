@@ -1,6 +1,7 @@
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
 from loguru import logger
+from sklearn.preprocessing import MinMaxScaler
+
 from .base_transformer import DataTransformer
 
 
@@ -29,7 +30,7 @@ class MinMaxScalerTransformer(DataTransformer):
         if data.empty:
             logger.error("Input data is empty. Transformation cannot proceed.")
             raise ValueError("Input data cannot be empty.")
-        
+
         if not all(data.dtypes.apply(pd.api.types.is_numeric_dtype)):
             logger.error("Input data contains non-numeric columns.")
             raise ValueError("All columns in the input data must be numeric.")
@@ -39,7 +40,7 @@ class MinMaxScalerTransformer(DataTransformer):
         # Apply Min-Max scaling
         scaler = MinMaxScaler()
         scaled_data = scaler.fit_transform(data)
-        
+
         logger.info("Min-Max scaling transformation completed.")
         logger.debug(f"Transformed data shape: {scaled_data.shape}")
 

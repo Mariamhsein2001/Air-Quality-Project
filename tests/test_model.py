@@ -1,5 +1,6 @@
 import pandas as pd
 import pytest
+
 from air_pollution.model import ModelFactory
 
 
@@ -42,10 +43,14 @@ def test_logistic_model(sample_data: pd.DataFrame, sample_target: pd.Series) -> 
     predictions = model.predict(sample_data)
 
     assert isinstance(predictions, pd.Series), "Predictions should be a pandas Series."
-    assert predictions.shape[0] == sample_data.shape[0], "Number of predictions should match the number of input samples."
+    assert (
+        predictions.shape[0] == sample_data.shape[0]
+    ), "Number of predictions should match the number of input samples."
 
 
-def test_decision_tree_model(sample_data: pd.DataFrame, sample_target: pd.Series) -> None:
+def test_decision_tree_model(
+    sample_data: pd.DataFrame, sample_target: pd.Series
+) -> None:
     """
     Test the Decision Tree model.
 
@@ -62,4 +67,6 @@ def test_decision_tree_model(sample_data: pd.DataFrame, sample_target: pd.Series
     predictions = model.predict(sample_data)
 
     assert isinstance(predictions, pd.Series), "Predictions should be a pandas Series."
-    assert predictions.shape[0] == sample_data.shape[0], "Number of predictions should match the number of input samples."
+    assert (
+        predictions.shape[0] == sample_data.shape[0]
+    ), "Number of predictions should match the number of input samples."

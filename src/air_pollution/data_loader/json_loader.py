@@ -1,7 +1,10 @@
-from loguru import logger
-import pandas as pd
 import json
+
+import pandas as pd
+from loguru import logger
+
 from .base_loader import DataLoader
+
 
 class JSONLoader(DataLoader):
     """Concrete implementation of DataLoader for JSON files."""
@@ -26,11 +29,11 @@ class JSONLoader(DataLoader):
                 data = json.load(file)
             logger.info("JSON file successfully loaded and normalized.")
             return pd.json_normalize(data)
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             logger.error(f"File not found: {file_path}")
             logger.exception("FileNotFoundError encountered.")
             raise
-        except json.JSONDecodeError as e:
+        except json.JSONDecodeError:
             logger.error(f"Invalid JSON format in file: {file_path}")
             logger.exception("JSONDecodeError encountered.")
             raise

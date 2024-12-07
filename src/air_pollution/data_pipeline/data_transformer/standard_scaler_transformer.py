@@ -1,7 +1,6 @@
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
 from loguru import logger
-from typing import Any
+from sklearn.preprocessing import StandardScaler
 
 from .base_transformer import DataTransformer
 
@@ -35,10 +34,6 @@ class StandardScalerTransformer(DataTransformer):
         # Apply Standard scaling
         scaler = StandardScaler()
         scaled_data = scaler.fit_transform(data)
-        
+
         logger.info("Standard scaling transformation completed.")
         return pd.DataFrame(scaled_data, columns=data.columns)
-
-
-
-

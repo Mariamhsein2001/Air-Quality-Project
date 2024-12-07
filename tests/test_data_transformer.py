@@ -1,5 +1,6 @@
 import pandas as pd
 import pytest
+
 from air_pollution.data_pipeline.data_transformer import TransformerFactory
 
 
@@ -28,8 +29,12 @@ def test_standard_scaler_transform(sample_data: pd.DataFrame) -> None:
     transformer = TransformerFactory.get_transformer("standard")
     transformed_data = transformer.transform(sample_data)
 
-    assert isinstance(transformed_data, pd.DataFrame), "Transformed data should be a pandas DataFrame."
-    assert transformed_data.shape == sample_data.shape, "Shape of transformed data does not match original data."
+    assert isinstance(
+        transformed_data, pd.DataFrame
+    ), "Transformed data should be a pandas DataFrame."
+    assert (
+        transformed_data.shape == sample_data.shape
+    ), "Shape of transformed data does not match original data."
 
 
 def test_minmax_scaler_transform(sample_data: pd.DataFrame) -> None:
@@ -46,5 +51,9 @@ def test_minmax_scaler_transform(sample_data: pd.DataFrame) -> None:
     transformer = TransformerFactory.get_transformer("minmax")
     transformed_data = transformer.transform(sample_data)
 
-    assert isinstance(transformed_data, pd.DataFrame), "Transformed data should be a pandas DataFrame."
-    assert transformed_data.shape == sample_data.shape, "Shape of transformed data does not match original data."
+    assert isinstance(
+        transformed_data, pd.DataFrame
+    ), "Transformed data should be a pandas DataFrame."
+    assert (
+        transformed_data.shape == sample_data.shape
+    ), "Shape of transformed data does not match original data."

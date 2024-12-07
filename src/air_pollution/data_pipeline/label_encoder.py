@@ -1,7 +1,6 @@
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder
 from loguru import logger
-from typing import Any
+from sklearn.preprocessing import LabelEncoder
 
 
 class LabelEncodingTransformer:
@@ -42,11 +41,13 @@ class LabelEncodingTransformer:
             raise ValueError("Input data cannot be empty.")
         if self.column not in data.columns:
             logger.error(f"Column '{self.column}' not found in the input data.")
-            raise ValueError(f"Column '{self.column}' does not exist in the input data.")
+            raise ValueError(
+                f"Column '{self.column}' does not exist in the input data."
+            )
 
         # Apply label encoding
         data[self.column] = self.encoder.fit_transform(data[self.column])
-        logger.info(f"Label encoding transformation completed for column: {self.column}.")
+        logger.info(
+            f"Label encoding transformation completed for column: {self.column}."
+        )
         return data
-
-

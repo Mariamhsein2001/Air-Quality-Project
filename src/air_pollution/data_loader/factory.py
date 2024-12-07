@@ -1,8 +1,11 @@
-from loguru import logger
 from typing import Union
+
+from loguru import logger
+
+from .base_loader import DataLoader
 from .csv_loader import CSVLoader
 from .json_loader import JSONLoader
-from .base_loader import DataLoader
+
 
 class DataLoaderFactory:
     """Factory class for creating DataLoader instances."""
@@ -17,7 +20,7 @@ class DataLoaderFactory:
                 "csv" and "json".
 
         Returns:
-            Union[DataLoader, CSVLoader, JSONLoader]: 
+            Union[DataLoader, CSVLoader, JSONLoader]:
                 An instance of CSVLoader or JSONLoader.
 
         Raises:
@@ -33,6 +36,6 @@ class DataLoaderFactory:
             else:
                 logger.error(f"Unsupported file type provided: {file_type}")
                 raise ValueError(f"Unsupported file type: {file_type}")
-        except ValueError as e:
+        except ValueError:
             logger.exception("Error occurred while creating DataLoader.")
             raise

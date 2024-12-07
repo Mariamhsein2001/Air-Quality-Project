@@ -1,20 +1,19 @@
+import argparse
+
 from loguru import logger
+from sklearn.metrics import classification_report, confusion_matrix
+
 from air_pollution.config import load_config
 from air_pollution.data_loader.factory import DataLoaderFactory
 from air_pollution.data_pipeline.preprocessing import Preprocessor
 from air_pollution.model.factory import ModelFactory
-from sklearn.metrics import confusion_matrix, classification_report
-import argparse
-import pandas as pd
-
 
 # Configure the argument parser
-parser = argparse.ArgumentParser(description="Run the ML data pipeline with the specified configuration.")
+parser = argparse.ArgumentParser(
+    description="Run the ML data pipeline with the specified configuration."
+)
 parser.add_argument(
-    "--config",
-    type=str,
-    required=True,
-    help="Path to the configuration YAML file."
+    "--config", type=str, required=True, help="Path to the configuration YAML file."
 )
 
 
@@ -49,7 +48,7 @@ def main() -> None:
         target_column = "Air Quality"
         logger.info(f"Initializing preprocessor with target column: {target_column}")
         preprocessor = Preprocessor(config, target_column)
-        X_train, X_test, y_train, y_test = preprocessor.preprocess(data, target_column)
+        X_train, X_test, y_train, y_test = preprocessor.preprocess(data)
         logger.info("Data preprocessing completed.")
         logger.debug(f"X_train shape: {X_train.shape}, X_test shape: {X_test.shape}")
 
@@ -73,7 +72,7 @@ def main() -> None:
         report = classification_report(y_test, predictions, output_dict=False)
         logger.info(f"Classification Report:\n{report}")
 
-    except Exception as e:
+    except Exception:
         logger.exception("An error occurred during pipeline execution.")
         raise
 

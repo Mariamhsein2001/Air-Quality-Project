@@ -1,7 +1,9 @@
+from typing import Any, Tuple
+
 import pandas as pd
-from sklearn.model_selection import train_test_split
 from loguru import logger
-from typing import Tuple
+from sklearn.model_selection import train_test_split
+
 from air_pollution.data_pipeline.data_transformer.factory import TransformerFactory
 from air_pollution.data_pipeline.label_encoder import LabelEncodingTransformer
 
@@ -20,12 +22,16 @@ class Preprocessor:
         self.config = config
         self.target_column = target_column
         logger.info(f"Initializing Preprocessor with target column: {target_column}")
-        
+
         # Initialize the scaling transformer using the factory
-        self.scaler = TransformerFactory.get_transformer(config.transformation.scaling_method)
+        self.scaler = TransformerFactory.get_transformer(
+            config.transformation.scaling_method
+        )
         self.label_encoder = LabelEncodingTransformer(target_column)
 
-    def preprocess(self, data: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
+    def preprocess(
+        self, data: pd.DataFrame
+    ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
         """
         Applies preprocessing steps to the data, including label encoding, scaling, and splitting.
 
@@ -46,8 +52,12 @@ class Preprocessor:
             logger.error("Input data is empty. Preprocessing cannot proceed.")
             raise ValueError("Input data cannot be empty.")
         if self.target_column not in data.columns:
-            logger.error(f"Target column '{self.target_column}' not found in the input data.")
-            raise ValueError(f"Target column '{self.target_column}' does not exist in the input data.")
+            logger.error(
+                f"Target column '{self.target_column}' not found in the input data."
+            )
+            raise ValueError(
+                f"Target column '{self.target_column}' does not exist in the input data."
+            )
 
         # Apply label encoding to the target column
         logger.info("Applying label encoding to the target column.")
@@ -58,8 +68,7 @@ class Preprocessor:
         X = data.drop(columns=[self.target_column])
         y = data[self.target_column]
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=self.config.splitting.test_size,
-            random_state=self.config.splitting.random_state
+            X, y, test_size=self.config.splitting.test_size
         )
 
         # Fit and transform the scaler on the training data
@@ -72,12 +81,3 @@ class Preprocessor:
 
         logger.info("Preprocessing pipeline completed successfully.")
         return X_train, X_test, y_train, y_test
-
-
-
-
-
-
-
-
-

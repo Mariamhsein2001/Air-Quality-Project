@@ -1,7 +1,8 @@
 from typing import Any
+
 import pandas as pd
-from sklearn.linear_model import LogisticRegression
 from loguru import logger
+from sklearn.linear_model import LogisticRegression
 
 from .base_model import Model
 
@@ -31,7 +32,9 @@ class LogisticModel(Model):
             ValueError: If the input data is empty or if the target values are missing.
         """
         if X.empty or y.empty:
-            logger.error("Training data or target values are empty. Training cannot proceed.")
+            logger.error(
+                "Training data or target values are empty. Training cannot proceed."
+            )
             raise ValueError("Training data and target values cannot be empty.")
 
         logger.info("Starting training of LogisticModel.")
@@ -52,7 +55,9 @@ class LogisticModel(Model):
             ValueError: If the input features are empty.
         """
         if X.empty:
-            logger.error("Input features for prediction are empty. Prediction cannot proceed.")
+            logger.error(
+                "Input features for prediction are empty. Prediction cannot proceed."
+            )
             raise ValueError("Input features for prediction cannot be empty.")
 
         logger.info("Starting prediction using LogisticModel.")
@@ -60,5 +65,3 @@ class LogisticModel(Model):
         logger.info("Prediction using LogisticModel completed successfully.")
 
         return pd.Series(predictions, index=X.index, dtype="category")
-
-
